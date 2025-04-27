@@ -2,37 +2,39 @@ name: Deploy Vite App to Azure App Service
 
 on:
   push:
-    branches:
-      - main  # Trigger the workflow on push to the main branch
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # Checks out the code from the repository
+      - uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Use Node.js version 18 (can be updated as needed)
+          node-version: '18'
 
       - name: Install dependencies and build
-        working-directory: frontend  # Assuming your code is in the 'frontend' directory
+        working-directory: frontend
         run: |
-          npm ci  # Install dependencies
-          npm run build  # Build the app
+          npm ci
+          npm run build
+
+      - name: Archive build output
+        run: |
+          cd frontend/dist
+          zip -r ../../site.zip .
 
       - name: Log in to Azure
-        uses: azure/login@v1  # Log in to Azure
+        uses: azure/login@v1
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}  # Reference a GitHub secret for Azure credentials
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2  # Deploy to Azure using this action
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: tarrifs-frontend-app  # Replace with your Azure App name
-          slot-name: Production  # Typically 'Production', unless you're using slots
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}  # Reference the GitHub secret
-          package: frontend/dist  # Point to the build output folder (Vite dist)
+          app-name: tarrifs-frontend-app
+          slot-name: Production
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: site.zip 
+
