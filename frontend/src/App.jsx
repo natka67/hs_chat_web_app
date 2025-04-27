@@ -15,7 +15,7 @@ function App() {
       const response = await axios.post("http://tarrifs-backend-app.azurewebsites.net/classify", { description });
       setResult(response.data);
     } catch (error) {
-      console.error("Error classifying:", error);
+      console.error("Error classifying -", error);
       setResult({ error: "Failed to classify. Server error." });
     } finally {
       setLoading(false);

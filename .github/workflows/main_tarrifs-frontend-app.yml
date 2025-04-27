@@ -19,7 +19,7 @@ jobs:
           npm ci
           npm run build
 
-      - name: Archive build output          # packs ONLY the files
+      - name: Archive build output          
         run: |
           cd frontend/dist
           zip -r ../../site.zip .
@@ -37,3 +37,4 @@ jobs:
           slot-name: Production
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: site.zip
+
