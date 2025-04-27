@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/32a03484-caad-43f7-ad8f-a91d63ca00c3/resourceGroups/tarrifs-rg/providers/Microsoft.Web/sites/tarrifs-frontend-app",
+    "appService.deploySubpath": "frontend/dist"
+}

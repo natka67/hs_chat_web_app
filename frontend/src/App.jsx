@@ -12,7 +12,7 @@ function App() {
     if (!description.trim()) return;
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:8000/classify", { description });
+      const response = await axios.post("http://tarrifs-backend-app.azurewebsites.net/classify", { description });
       setResult(response.data);
     } catch (error) {
       console.error("Error classifying:", error);
@@ -66,7 +66,7 @@ function App() {
             </button>
 
             <button
-              onClick={() => window.open('http://localhost:8000/download-pdfs', '_blank')}
+              onClick={() => window.open('http://tarrifs-backend-app.azurewebsites.net/download-pdfs', '_blank')}
               className="secondary-button"
             >
               Download Input PDF
